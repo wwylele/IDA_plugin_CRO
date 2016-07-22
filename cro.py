@@ -232,6 +232,6 @@ def load_file(li, neflags, format):
     return 0
 
 def load_crs(name):
-    f = open(name)
+    f = open(name, "rb")
     load_cro(f, True)
     f.close()
