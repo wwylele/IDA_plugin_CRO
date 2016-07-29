@@ -103,6 +103,8 @@ def load_cro(li, is_crs):
 
     if not is_crs:
         li.file2base(0, base, base + FileSize, 0)
+        idaapi.add_segm(0, base, base + 0x80, "header", "RODATA");
+        idaapi.add_segm(0, base + SegmentTableOffset, base + DataOffset, "tables", "RODATA");
 
     # set segments
     li.seek(SegmentTableOffset)
