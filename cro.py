@@ -210,6 +210,8 @@ def load_cro(li, is_crs):
             if c == '\0':
                 break
             name += c
+        if idaapi.segtype(target_offset) == idaapi.SEG_CODE:
+            target_offset &= ~1
         idaapi.add_entry(target_offset, target_offset, name, idaapi.segtype(target_offset) == idaapi.SEG_CODE)
         idaapi.make_name_public(target_offset)
 
@@ -217,6 +219,8 @@ def load_cro(li, is_crs):
     for i in range(ExportIndexedSymbolNum):
         target, = struct.unpack('<I', li.read(4))
         target_offset = DecodeTag(segmentAddress, target)
+        if idaapi.segtype(target_offset) == idaapi.SEG_CODE:
+            target_offset &= ~1
         idaapi.add_entry(i, target_offset, "indexedExport_%d" % i, idaapi.segtype(target_offset) == idaapi.SEG_CODE)
         idaapi.make_name_public(target_offset)
 
